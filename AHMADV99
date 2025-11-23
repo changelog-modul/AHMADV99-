@@ -705,7 +705,7 @@ local WhitelistPets = {
         task.spawn(function()
             while true do
                 task.wait(2)  -- Re-scan every 2 seconds
-                local currentPets = WhitelistPets
+                local currentPets = GetPlayerPets()
                 if #currentPets == 0 then continue end
 
                 for _, pet in ipairs(currentPets) do
